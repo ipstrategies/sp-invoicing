@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Invoice Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .invoice-preview {
+      display: none;
+      margin-top: 30px;
+      border-top: 2px solid #000;
+      padding-top: 20px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .left, .right {
+      width: 48%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #000;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .generate-btn {
+      background: #28a745;
+      color: white;
+    }
+
+    .print-btn {
+      background: #007bff;
+      color: white;
+    }
+
+    @media print {
+      .form-section,
+      .generate-btn,
+      .print-btn {
+        display: none;
+      }
+
+      .invoice-preview {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Invoice Generator</h1>
+
+  <div class="form-section">
+    <label>Your Name</label>
+    <input id="yourName" type="text" placeholder="Shawn Patterson" />
+
+    <label>Your Address</label>
+    <textarea id="yourAddress" placeholder="8400 S Cleveland Massillon Road, Clinton OH"></textarea>
+
+    <label>Your Phone</label>
+    <input id="yourPhone" type="tel" placeholder="330-338-5848" />
+
+    <label>Client Name</label>
+    <input id="clientName" type="text" placeholder="Client or Company" />
+
+    <label>Client Address</label>
+    <textarea id="clientAddress" placeholder="Client address"></textarea>
+
+    <label>Invoice Number</label>
+    <input id="invoiceNumber" type="text" placeholder="e.g. SE-6925" />
+
+    <label>Invoice Date</label>
+    <input id="invoiceDate" type="date" />
+
+    <label>Vehicle Info</label>
+    <input id="vehicle" type="text" placeholder="Year Make Model" />
+
+    <label>VIN Number</label>
+    <input id="vin" type="text" placeholder="e.g. 01155" />
+
+    <label>Pickup Location</label>
+    <input id="pickup" type="text" placeholder="Pickup location" />
+
+    <label>Drop-off Location</label>
+    <input id="dropoff" type="text" placeholder="Drop-off location" />
+
+    <label>Description of Work</label>
+    <textarea id="description" placeholder="What was done (e.g. Delivered, replaced mud flaps)"></textarea>
+
+    <label>Total Amount</label>
+    <input id="total" type="text" placeholder="$0.00" />
+
+    <button class="btn generate-btn" onclick="generateInvoice()">Generate Invoice</button>
+  </div>
+
+  <div class="invoice-preview" id="invoicePreview">
+    <h2>INVOICE</h2>
+    <p><strong>Invoice #: </strong><span id="outInvoiceNumber"></span></p>
+    <p><strong>Date: </strong><span id="outInvoiceDate"></span></p>
+    <p><strong>Due: </strong>On Receipt</p>
+
+    <div class="row">
+      <div class="left">
+        <p><strong>From:</strong><br>
+        <span id="outYourName"></span><br>
+        <span id="outYourAddress"></span><br>
+        <span id="outYourPhone"></span></p>
+      </div>
+      <div class="right">
+        <p><strong>To:</strong><br>
+        <span id="outClientName"></span><br>
+        <span id="outClientAddress"></span></p>
+      </div>
+    </div>
+
+    <p><strong>Vehicle:</strong> <span id="outVehicle"></span><br>
+    <strong>VIN:</strong> <span id="outVin"></span><br>
+    <strong>Pickup:</strong> <span id="outPickup"></span><br>
+    <strong>Drop-off:</strong> <span id="outDropoff"></span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span id="outDescription"></span></td>
+          <td><span id="outTotal"></span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="total">Total Due: <span id="outTotal2"></span></p>
+
+    <button class="btn print-btn" onclick="window.print()">📄 Print or Save as PDF</button>
+  </div>
+
+  <script>
+    function generateInvoice() {
+      document.getElementById('outYourName').innerText = document.getElementById('your
