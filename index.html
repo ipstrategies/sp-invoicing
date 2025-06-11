@@ -193,6 +193,32 @@
     <button class="btn print-btn" onclick="window.print()">📄 Print or Save as PDF</button>
   </div>
 
-  <script>
-    function generateInvoice() {
-      document.getElementById('outYourName').innerText = document.getElementById('your
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.generate-btn').addEventListener('click', function () {
+      const getValue = id => document.getElementById(id)?.value || '';
+
+      document.getElementById('outYourName').innerText = getValue('yourName');
+      document.getElementById('outYourAddress').innerText = getValue('yourAddress');
+      document.getElementById('outYourPhone').innerText = getValue('yourPhone');
+      document.getElementById('outClientName').innerText = getValue('clientName');
+      document.getElementById('outClientAddress').innerText = getValue('clientAddress');
+      document.getElementById('outInvoiceNumber').innerText = getValue('invoiceNumber');
+      document.getElementById('outInvoiceDate').innerText = getValue('invoiceDate');
+      document.getElementById('outVehicle').innerText = getValue('vehicle');
+      document.getElementById('outVin').innerText = getValue('vin');
+      document.getElementById('outPickup').innerText = getValue('pickup');
+      document.getElementById('outDropoff').innerText = getValue('dropoff');
+      document.getElementById('outDescription').innerText = getValue('description');
+      document.getElementById('outTotal').innerText = getValue('total');
+      document.getElementById('outTotal2').innerText = getValue('total');
+
+      document.getElementById('invoicePreview').style.display = 'block';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  });
+</script>
+
+
+</body>
+</html>
